@@ -37,6 +37,6 @@ node{
 Build is done.
 
 LANDMARKTECH - DevOps Team''', recipientProviders: [developers(), contributor(), upstreamDevelopers()], subject: 'Build Status', to: 'Jensen.kokou@gmail.com'
-// This will be the Email message for recipents after build is done :D 
+// Create a pipeline syntax for a personalized email to members of your team. 
   }
 }
