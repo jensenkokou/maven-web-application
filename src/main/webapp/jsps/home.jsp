@@ -13,7 +13,7 @@
 <h1 align="center">We are developing and supporting quality Software Solutions to millions of clients globally.
 	           We are raising millionaires in IT automation.
 	We offer Training for DevOps with Linux and Cloud equipping IT Engineers for best performance.
-	Note for Jasmine : Im not hungry but can you do the dishes when you get back please :( </h1>
+	Class 33 will start on July 15th, 2023.</h1>
 <hr>
 <br>
 	<h1><h3> Server Side IP Address </h3><br>
