@@ -1,0 +1,42 @@
+def mavenhome = "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.2"
+// MAKE SURE ALL RESPECTIVE SERVERS AND APPS ARE RUNNING TO PREVENT FAILS 
+node{
+  stage('1.CodeClone'){
+      git "https://github.com/jensenkokou/maven-web-application"
+      // Use the git command to clone your repository. Replace the URL with the link to your repository.
+  }
+  stage('2.MavenBuild'){
+      sh "${mavenhome}/bin/mvn package"
+      // Make sure to configure the Maven installation in Jenkins and provide the correct path to the 'mvn' command.
+  }
+  stage('3.CodeQualityAnalysis'){
+      sh "${mavenhome}/bin/mvn sonar:sonar"
+      // Make sure your SQ server is running & Change IP in Pom.xml
+  }
+  stage('4.Upload2Nexus'){
+      sh "${mavenhome}/bin/mvn deploy"
+  }
+  stage('5.Deploy2UAT'){
+      deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://3.86.203.143:8177/')], contextPath: null, war: 'target/*war'
+      // Make sure Tomcat is started on your server & Generate a 'Pipeline Syntax' for a deploy adapter
+  }
+  stage('6.ManualApproval'){
+      sh "echo 'Notifying reviewers that the application is ready for review.' "
+      timeout(time:5, unit:'HOURS') {
+          input message: 'Application ready for deployment, Please review and approve'
+          // Reviewers have 5 Hours to Manually approve || Note - You can change mins/hours if needed
+      }
+  }
+  stage('7.Deploy2Prod'){
+      deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://3.86.203.143:8177/')], contextPath: null, war: 'target/*war'
+      // I used the same pipeline syntax for my deployment to production 
+  }
+  stage('8.Notification'){
+     emailext body: '''Hello Team,
+
+Build is done.
+
+LANDMARKTECH - DevOps Team''', recipientProviders: [developers(), contributor(), upstreamDevelopers()], subject: 'Build Status', to: 'Jensen.kokou@gmail.com'
+// This will be the Email message for recipents after build is done :D 
+  }
+}
