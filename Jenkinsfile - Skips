@@ -1,0 +1,40 @@
+node {
+  // Define the Maven installation to be used
+  def mavenHome = tool name: "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.2"
+  
+  stage('1Clone') {
+    // Clone the Git repository
+    git 'https://github.com/jensenkokou/maven-web-application'
+  }
+  
+  stage('2Test+build') {
+    // Run Maven clean and package commands
+    sh "${mavenHome}/bin/mvn clean package"
+  }
+  
+  /*
+// This starts to process of skipping these processes listed from here to 
+  stage('SonarQube') {
+    // Uncomment this stage to run SonarQube analysis
+    sh "${mavenHome}/bin/mvn sonar:sonar"
+  }
+  
+  stage('4UploadArtifacts') {
+    // Uncomment this stage to upload artifacts
+    sh "${mavenHome}/bin/mvn deploy"
+  }
+  
+  stage('5Deploy') {
+    // Uncomment this stage to deploy the application to Tomcat
+    deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://54.166.85.32:8177/')], contextPath: null, war: 'target/*war'
+  }
+  
+  stage('6Notification') {
+    // Uncomment this stage to send notification email
+    emailext body: '''Hi Team,
+    Build status
+    Landmark Technologies''', recipientProviders: [developers(), contributor()], subject: 'build status', to: 'developers'
+  }
+  */
+// Here, which this is the end official end ^ to what process will be skipped.
+}
