@@ -40,3 +40,14 @@ LANDMARKTECH - DevOps Team''', recipientProviders: [developers(), contributor(),
 // Create a pipeline syntax for a personalized email to members of your team. 
   }
 }
+
+
+
+READ ME 
+
+Since this is a play pipeline please remember when logging back into pipeline to use and avoid errors
+
+1. Get servers up and running ( SonarQube, Nexus, and Tomcat )
+2. Start Applications with commands on the CLI ( SonarQube, Nexus, Tomcat)
+3. Update pom.xml file with SonarQube new Public IP address
+4. Update pom.xml file with new Nexus Repo URLS
