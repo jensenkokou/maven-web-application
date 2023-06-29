@@ -1,5 +1,5 @@
 node {
-  // Define the Maven installation to be used
+  // Define the Maven installation to be used / For this we wont use absoulte path 
   def mavenHome = tool name: "maven3.9.2"
   
   stage('1Clone') {
