@@ -1,0 +1,37 @@
+def mavenhome = "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.2"
+// MAKE SURE ALL RESPECTIVE SERVERS AND APPS ARE RUNNING TO PREVENT FAILS 
+node{
+  stage('1.GitClone'){
+      git "https://github.com/jensenkokou/maven-web-application"
+      // Create a pipeline syntax using " git " and fill out url, branch, and creds and paste generated syntax 
+  }
+  stage('2.Test+Build'){
+      sh "${mavenhome}/bin/mvn clean package"
+      // Make sure to configure the Maven installation in Jenkins and provide the correct path to the 'mvn' commands for thsi to work 
+  }
+  stage('3.SonarQube'){
+      sh "${mavenhome}/bin/mvn sonar:sonar"
+      // Make sure your SQ server is running & Change IP in Pom.xml
+  }
+  stage('4.Upload2Nexus'){
+      sh "${mavenhome}/bin/mvn deploy"
+  }
+  stage('5.Deploy2Tomcat'){
+      deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://3.86.203.143:8177/')], contextPath: null, war: 'target/*war'
+      // Make sure Tomcat is started on your server & Generate a 'Pipeline Syntax' for a deploy adapter
+  }
+  stage('6.ManualApproval'){
+      sh "echo 'Notifying reviewers that the application is ready for review.' "
+      timeout(time:5, unit:'HOURS') {
+          input message: 'Application ready for deployment, Please review and approve'
+          // Reviewers have 5 Hours to Manually approve || Note - You can change mins/hours if needed
+      }
+      stage('7.Notification'){
+     emailext body: '''Hello Team,
+
+Build is done.
+
+LANDMARKTECH - DevOps Team''', recipientProviders: [developers(), contributor(), upstreamDevelopers()], subject: 'Build Status', to: 'Jensen.kokou@gmail.com'
+// Create a pipeline syntax for a personalized email to members of your team. 
+  }
+}
