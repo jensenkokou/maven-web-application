@@ -2,7 +2,7 @@ def mavenhome = "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/mav
 // MAKE SURE ALL RESPECTIVE SERVERS AND APPS ARE RUNNING TO PREVENT FAILS 
 node{
   stage('1.GitClone'){
-      git "https://github.com/jensenkokou/maven-web-application"
+      git branch: 'development ', credentialsId: '3c0bdefd-ee21-47f8-963f-e12df1741398', url: 'https://github.com/jensenkokou/maven-web-application'
       // Create a pipeline syntax using " git " and fill out url, branch, and creds and paste generated syntax 
   }
   stage('2.Test+Build'){
