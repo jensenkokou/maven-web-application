@@ -1,6 +1,6 @@
 node {
   // Define the Maven installation to be used
-  def mavenHome = tool name: "/var/lib/jenkins/tools/hudson.tasks.Maven_MavenInstallation/maven3.9.2"
+  def mavenHome = tool name: "maven3.9.2"
   
   stage('1Clone') {
     // Clone the Git repository
