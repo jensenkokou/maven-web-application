@@ -1,0 +1,5 @@
+Compilation: Maven can compile your source code by invoking the appropriate compiler plugin (e.g., the Java Compiler Plugin for Java projects). It compiles your source code files into bytecode, typically in the "target" directory.
+
+Testing: Maven supports running tests using various testing frameworks (e.g., JUnit, TestNG). You can configure Maven to execute your unit tests, integration tests, or any other type of tests you have in your project. Test results are typically reported in various formats, and you can use plugins like the Surefire or Failsafe plugins to control and customize the testing process.
+
+Packaging: After successful compilation and testing, Maven can package your project's artifacts into various formats, such as JAR, WAR, EAR, or other custom formats. The packaging step is configured in your project's Maven POM (Project Object Model) file using the <packaging> element.
